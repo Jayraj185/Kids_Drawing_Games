@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
                         return InkWell(
                           onTap: (){
                             homeController.data.value = homeController.Levels[index];
+                            homeController.points.clear();
                             Get.toNamed('Draw');
                           },
                           child: Container(

@@ -25,7 +25,7 @@ class _ImageDrawPageState extends State<ImageDrawPage> {
         children: [
           Align(
             alignment: Alignment.topLeft,
-            child: InkWell(
+            child: GestureDetector(
               onTap: (){
                 Get.back();
               },
@@ -43,65 +43,115 @@ class _ImageDrawPageState extends State<ImageDrawPage> {
             ),
           ),
           Align(
+            alignment: Alignment.bottomRight,
+            child: GestureDetector(
+              onTap: (){
+                // print("========= ${homeController.ListLenth.length}  ${homeController.AddDrawing[0]}");
+                // if(homeController.AddDrawing.length != 0)
+                //   {
+                //     int i = homeController.ListLenth.length;
+                //     print("=========$i ${homeController.ListLenth.length}");
+                //     homeController.points.add(homeController.AddDrawing[0]);
+                //   }
+
+              },
+              child: Container(
+                height: Get.height/9,
+                width: Get.height/9,
+                decoration: BoxDecoration(
+                    color: Colors.pinkAccent,
+                    borderRadius: BorderRadius.circular(12)
+                ),
+                margin: EdgeInsets.only(right: Get.width/4.6),
+                alignment: Alignment.center,
+                child: Image.asset("assets/images/share.png",height: 21.sp,width: 21.sp,color: Colors.white,),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: GestureDetector(
+              onTap: (){
+                print("========= ${homeController.ListLenth.length}");
+               if(homeController.ListLenth.length > 1)
+                 {
+                   int i = homeController.ListLenth.length;
+                   homeController.AddDrawing.add(homeController.points[i-1]);
+                   homeController.points.removeRange(homeController.ListLenth[i-2], homeController.ListLenth[i-1]);
+                   homeController.ListLenth.removeLast();
+                 }
+               else if(homeController.ListLenth.length == 1)
+                 {
+                   int i = homeController.ListLenth.length;
+                   homeController.AddDrawing.add(homeController.points[0]);
+                   homeController.points.removeRange(0, homeController.ListLenth[i-1]);
+                   homeController.ListLenth.removeLast();
+                 }
+              },
+              child: Container(
+                height: Get.height/9,
+                width: Get.height/9,
+                decoration: BoxDecoration(
+                    color: Colors.pinkAccent,
+                    borderRadius: BorderRadius.circular(12)
+                ),
+                margin: EdgeInsets.only(right: Get.width/3.4),
+                alignment: Alignment.center,
+                child: Image.asset("assets/images/back.png",height: 21.sp,width: 21.sp,color: Colors.white,),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: GestureDetector(
+              onTap: (){
+                homeController.points.clear();
+              },
+              child: Container(
+                height: Get.height/9,
+                width: Get.height/9,
+                decoration: BoxDecoration(
+                    color: Colors.pinkAccent,
+                    borderRadius: BorderRadius.circular(12)
+                ),
+                margin: EdgeInsets.only(left: Get.width/60,top: Get.height/30),
+                alignment: Alignment.center,
+                child: Icon(Icons.refresh,color: Colors.white,size: 25.sp,),
+              ),
+            ),
+          ),
+          Align(
             alignment: Alignment.center,
-            child: Container(
-              height: Get.height/1.2,
-              width: Get.width/1.8,
-              // color: Colors.red,
-              alignment: Alignment.center,
-              margin: EdgeInsets.only(right: Get.width/6),
-              // child: GetBuilder(
-              //   builder: (controller) => GestureDetector(
-              //       onPanStart: (details) {
-              //         homeController.OnPanStart(details, context);
-              //       },
-              //
-              //       onPanUpdate: (details) {
-              //         homeController.OnPanUpdate(details, context);
-              //       },
-              //
-              //       onPanEnd: (details) {
-              //         homeController.OnPanEnd();
-              //       },
-              //
-              //       child: Stack(
-              //         children: [
-              //           Image.asset("${homeController.data['image']}"),
-              //           CustomPaint(
-              //             size: Size.infinite,
-              //             painter: Drawing(pointList: homeController.points),
-              //           )
-              //         ],
-              //       )
-              //   ),
-              // )
-              child: Obx(
-                () => GestureDetector(
-                    onPanStart: (details) {
-                      homeController.OnPanStart(details, context);
-                    },
+            child: Obx(
+              () => GestureDetector(
 
-                    onPanUpdate: (details) {
-                      homeController.OnPanUpdate(details, context);
-                    },
+                onPanStart: (details) {
+                  homeController.OnPanStart(details, context);
+                },
 
-                    onPanEnd: (details) {
-                      homeController.OnPanEnd();
-                    },
+                onPanUpdate: (details) {
+                  homeController.OnPanUpdate(details, context);
+                },
 
-                    child: Stack(
-                      children: [
-                        Image.asset("${homeController.data['image']}"),
-                        CustomPaint(
-                          size: Size.infinite,
-                          painter: Drawing(pointList: homeController.points!.value),
-                        )
-                      ],
-                    )
-                  // child: CustomPaint(
-                  //   size: Size.infinite,
-                  //   painter: Drawing(pointList: homeController.points!.value),
-                  // ),
+                onPanEnd: (details) {
+                  homeController.OnPanEnd();
+                },
+
+                child: Container(
+                  height: Get.height/1.2,
+                  width: Get.width/1.8,
+                  // color: Colors.red,
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(right: Get.width/6),
+                  child: Stack(
+                    children: [
+                      Image.asset("${homeController.data['image']}"),
+                      CustomPaint(
+                        size: Size.infinite,
+                        painter: Drawing(pointList: homeController.points.value),
+                      )
+                    ],
+                  )
                 ),
               ),
             ),
@@ -242,11 +292,11 @@ class Drawing extends CustomPainter
 
     for(int i=0; i<pointList!.length - 1; i++)
       {
-        if(pointList![i] != null && pointList![i + 1] != null)
+        if(pointList![i]!.points != null && pointList![i + 1]!.points != null)
           {
             canvas.drawLine(pointList![i]!.points!, pointList![i + 1]!.points!, pointList![i]!.paint!);
           }
-        else if(pointList![i] != null && pointList![i + 1] == null)
+        else if(pointList![i]!.points != null && pointList![i + 1]!.points == null)
           {
             offsetpoints.clear();
             offsetpoints.add(pointList![i]!.points!);

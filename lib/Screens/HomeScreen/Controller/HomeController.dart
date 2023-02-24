@@ -59,7 +59,9 @@ class HomeController extends GetxController {
   RxInt SelectIndex2 = 0.obs;
   RxInt SelectIndex3 = 0.obs;
   RxInt SelectTypesIndex = 0.obs;
-  RxList<DrawingModel?>? points = <DrawingModel>[].obs;
+  RxList ListLenth = [].obs;
+  RxList<DrawingModel?> AddDrawing = <DrawingModel>[].obs;
+  RxList<DrawingModel?> points = <DrawingModel>[].obs;
 
 
   //Only Function's
@@ -111,7 +113,7 @@ class HomeController extends GetxController {
   void OnPanStart(DragStartDetails details,BuildContext context)
   {
     RenderBox? renderBox = context.findRenderObject() as RenderBox?;
-    points!.add(DrawingModel(
+    points.add(DrawingModel(
         points: renderBox!.globalToLocal(details.globalPosition),
         paint: Paint()
           ..strokeCap = SelectCap.value
@@ -125,7 +127,7 @@ class HomeController extends GetxController {
   void OnPanUpdate(DragUpdateDetails details,BuildContext context)
   {
     RenderBox? renderBox = context.findRenderObject() as RenderBox?;
-    points!.add(DrawingModel(
+    points.add(DrawingModel(
         points: renderBox!.globalToLocal(details.globalPosition),
         paint: Paint()
           ..strokeCap = SelectCap.value
@@ -138,7 +140,8 @@ class HomeController extends GetxController {
 
   void OnPanEnd()
   {
-    points!.add(null);
+    ListLenth.add(points.length);
+    points.add(DrawingModel(points: null,paint: null));
     update();
   }
 
