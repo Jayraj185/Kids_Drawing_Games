@@ -49,6 +49,8 @@ class _HomePageState extends State<HomePage> {
                           onTap: (){
                             homeController.data.value = homeController.Levels[index];
                             homeController.points.clear();
+                            homeController.ListLenth.clear();
+                            homeController.AddDrawing.clear();
                             Get.toNamed('Draw');
                           },
                           child: Container(

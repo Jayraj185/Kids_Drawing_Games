@@ -46,12 +46,23 @@ class _ImageDrawPageState extends State<ImageDrawPage> {
             alignment: Alignment.bottomRight,
             child: GestureDetector(
               onTap: (){
-                // print("========= ${homeController.ListLenth.length}  ${homeController.AddDrawing[0]}");
-                // if(homeController.AddDrawing.length != 0)
+                // print("========= ${homeController.ListLenth2.length}  ${homeController.AddDrawing.length}");
+                // if(homeController.AddDrawing.length > 1)
                 //   {
-                //     int i = homeController.ListLenth.length;
-                //     print("=========$i ${homeController.ListLenth.length}");
-                //     homeController.points.add(homeController.AddDrawing[0]);
+                //     //int i = homeController.ListLenth2.length;//3
+                //
+                //     for(int j=0; j<homeController.ListLenth2[0]; j++)//0<28
+                //     {
+                //       homeController.points.add(homeController.AddDrawing[j]);
+                //       // homeController.AddDrawing.removeAt(j);
+                //     }
+                //     print(" I ============= ${homeController.ListLenth2[0]} ${homeController.AddDrawing.length}");
+                //     homeController.AddDrawing.removeRange(0, homeController.ListLenth2[0]);
+                //     homeController.ListLenth2.removeAt(0);
+                //     print(" I ============= ${homeController.ListLenth2[0]} ${homeController.AddDrawing.length}");
+                //     // homeController.AddDrawing.clear();
+                //     // print("=========$i ${homeController.ListLenth.length}");
+                //     // homeController.points.add(homeController.AddDrawing[0]);
                 //   }
 
               },
@@ -76,16 +87,24 @@ class _ImageDrawPageState extends State<ImageDrawPage> {
                if(homeController.ListLenth.length > 1)
                  {
                    int i = homeController.ListLenth.length;
-                   homeController.AddDrawing.add(homeController.points[i-1]);
+                   for(int j=homeController.ListLenth[i-2]; j<homeController.ListLenth[i-1]; j++)//44<92
+                     {
+                       homeController.AddDrawing.add(homeController.points[j]);
+                       //print(" I ============= $j ${homeController.AddDrawing.length}");
+                     }
                    homeController.points.removeRange(homeController.ListLenth[i-2], homeController.ListLenth[i-1]);
-                   homeController.ListLenth.removeLast();
+                    homeController.ListLenth.removeLast();
                  }
                else if(homeController.ListLenth.length == 1)
                  {
                    int i = homeController.ListLenth.length;
-                   homeController.AddDrawing.add(homeController.points[0]);
+                   for(int j=0; j<homeController.ListLenth[i-1]; j++)
+                   {
+                     homeController.AddDrawing.add(homeController.points[j]);
+                     //print("E ============= $j ${homeController.AddDrawing.length}");
+                   }
                    homeController.points.removeRange(0, homeController.ListLenth[i-1]);
-                   homeController.ListLenth.removeLast();
+                    homeController.ListLenth.removeLast();
                  }
               },
               child: Container(

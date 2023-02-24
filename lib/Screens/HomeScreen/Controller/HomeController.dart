@@ -60,6 +60,7 @@ class HomeController extends GetxController {
   RxInt SelectIndex3 = 0.obs;
   RxInt SelectTypesIndex = 0.obs;
   RxList ListLenth = [].obs;
+  // RxList ListLenth2 = [].obs;
   RxList<DrawingModel?> AddDrawing = <DrawingModel>[].obs;
   RxList<DrawingModel?> points = <DrawingModel>[].obs;
 
@@ -141,6 +142,8 @@ class HomeController extends GetxController {
   void OnPanEnd()
   {
     ListLenth.add(points.length);
+    // ListLenth2.add(points.length);
+    // print("============= LENTH ${ListLenth.length}  ${ListLenth2.length}\n=========== Value $ListLenth $ListLenth2");
     points.add(DrawingModel(points: null,paint: null));
     update();
   }
